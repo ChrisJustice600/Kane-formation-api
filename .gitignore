@@ -1,0 +1,60 @@
+# Fichier .gitignore pour un projet Node.js avec MongoDB
+
+# Dependencies
+node_modules/
+
+# Environnement variables
+.env
+
+# Fichiers de logs
+*.log
+
+# Fichiers de débogage
+*.pid
+*.seed
+
+# Dossiers de build / compilation
+dist/
+build/
+
+# Fichiers de configuration IDE
+.vscode/
+.idea/
+
+# Fichiers temporaires
+*.tmp
+*.temp
+
+# Fichiers de sauvegarde
+*.bak
+*.backup
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers spécifiques à macOS
+._*
+
+# Fichiers spécifiques à Windows
+*.lnk
+
+# Fichiers de cache npm
+.npm
+.npmrc
+
+# Fichiers de cache Yarn
+.yarn/
+.yarnrc
+
+# Fichiers de cache pnpm
+.pnpm-store/
+
+# Fichiers de couverture de test
+coverage/
+
+# Fichiers de documentation générés
+docs/
+
+# Fichiers de seed (optionnel)
+seed.js
