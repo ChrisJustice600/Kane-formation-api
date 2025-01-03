@@ -1,9 +1,38 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
-const UtilisateurSchema = new mongoose.Schema({
-  code_utilisateur: { type: String, required: true },
-  login: { type: String, required: true },
-  password: { type: String, required: true },
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  role: {
+    type: String,
+    enum: ["admin", "participant", "formateur"], // Dépend des rôles envisagés dans l'application
+    default: "participant",
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-module.exports = mongoose.model('Utilisateur', UtilisateurSchema);
+// Middleware pour hasher le mot de passe avant sauvegarde
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+module.exports = mongoose.model("User", userSchema);
