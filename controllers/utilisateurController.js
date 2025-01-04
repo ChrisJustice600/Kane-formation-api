@@ -88,16 +88,19 @@ exports.loginUtilisateur = async (req, res) => {
     );
 
     // Réponse avec le token et les informations de l'utilisateur
-    res.status(200).json({
-      message: "Connexion réussie",
-      token,
-      utilisateur: {
-        id: utilisateur._id,
-        username: utilisateur.username,
-        email: utilisateur.email,
-        role: utilisateur.role,
-      },
-    });
+    res
+      .cookie("token", token)
+      .status(200)
+      .json({
+        message: "Connexion réussie",
+        token,
+        utilisateur: {
+          id: utilisateur._id,
+          username: utilisateur.username,
+          email: utilisateur.email,
+          role: utilisateur.role,
+        },
+      });
   } catch (error) {
     console.error("Erreur lors de la connexion :", error);
     res.status(500).json({ message: "Erreur serveur" });

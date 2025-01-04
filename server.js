@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors"); // Import CORS
 const connectDB = require("./config/db");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 connectDB();
@@ -19,16 +20,33 @@ mongoose.connection.on("error", (err) => {
 const app = express();
 
 // Middleware pour activer les CORS
-app.use(
-  cors({
-    origin: "http://localhost:5173", // Autoriser cette origine spécifique
-    methods: ["GET", "POST", "PUT", "DELETE"], // Méthodes autorisées
-    credentials: true, // Autorise les cookies si nécessaire
-  })
-);
 
+const allowedOrigins = ["http://localhost:5173"];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "X-Requested-With",
+    "Accept",
+    "Origin",
+  ],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
+// Middleware pour parser les cookies
+app.use(cookieParser());
 app.use(express.json());
-
 // Routes
 app.use("/api/participants", require("./routes/participantRoutes"));
 app.use("/api/formateurs", require("./routes/formateurRoutes"));
