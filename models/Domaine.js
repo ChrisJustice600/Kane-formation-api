@@ -1,8 +1,19 @@
 const mongoose = require('mongoose');
 
-const DomaineSchema = new mongoose.Schema({
-  code_domaine: { type: String, required: true },
-  libelle: { type: String, required: true },
+const domaineSchema = new mongoose.Schema({
+    code_domaine: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    libelle: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    }
 });
 
-module.exports = mongoose.model('Domaine', DomaineSchema);
+module.exports = mongoose.model('Domaine', domaineSchema);

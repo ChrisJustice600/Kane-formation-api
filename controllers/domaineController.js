@@ -48,3 +48,15 @@ exports.deleteDomaine = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.addDomaine = async (req, res) => {
+  const { code_domaine, libelle, description } = req.body;
+  const domaine = new Domaine({ code_domaine, libelle, description });
+
+  try {
+    await domaine.save();
+    res.status(201).json(domaine);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
