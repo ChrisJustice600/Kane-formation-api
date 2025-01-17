@@ -32,7 +32,7 @@ exports.getDomaineById = async (req, res) => {
 exports.updateDomaine = async (req, res) => {
   try {
     const domaine = await Domaine.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!domaine) return res.status(404).json({ message: 'Domaine not found' });
+    if (!domaine) return res.status(404).json({ message: 'Domaine non trouvé' });
     res.json(domaine);
   } catch (error) {
     res.status(400).json({ message: error.message });

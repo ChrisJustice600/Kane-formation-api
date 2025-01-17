@@ -42,8 +42,8 @@ exports.updateFormation = async (req, res) => {
 exports.deleteFormation = async (req, res) => {
   try {
     const formation = await Formation.findByIdAndDelete(req.params.id);
-    if (!formation) return res.status(404).json({ message: 'Formation not found' });
-    res.json({ message: 'Formation deleted' });
+    if (!formation) return res.status(404).json({ message: 'Formation non trouvée' });
+    res.json({ message: 'Formation supprimée avec succès' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
